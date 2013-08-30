@@ -1,3 +1,4 @@
+require 'oauth2'
 module Dronetrack
   class RestService
     def initialize (baseUrl, path, accessToken)
@@ -8,17 +9,17 @@ module Dronetrack
       @client = OAuth2::Client.new("", "", :site => baseUrl) do |conn|
         conn.request :multipart
         conn.request :url_encoded
-      end  
-      @token = OAuth2::AccessToken.from_hash(client, :access_token => accessToken)
-      
+      end 
+      @token = OAuth2::AccessToken.from_hash(@client, :access_token => accessToken)
     end
 
     def all (query=nil)
-        makeRequest @path, :params => query
+        opts = if query.nil? then {} else {:params => query} end
+        makeRequest @path, :get, opts
     end
 
     def get (id)
-        makeRequest "#{@path}/#{id}"
+        makeRequest "#{@path}/#{id}", :get
     end
 
     def create (item)
@@ -37,7 +38,8 @@ module Dronetrack
 
     protected
 
-    def makeRequest (url, method = :get, opts = {})
+    def makeRequest (url, method, opts = {})
+        byebug
         if opts[:headers].nil?
           opts[:headers] = {}
         end  

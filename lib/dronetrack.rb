@@ -1,4 +1,4 @@
-require 'drone/restservice'
-require 'drone/drone'
-require 'drone/track'
-require 'drone/oauthhelper'
+require 'dronetrack/restservice'
+require 'dronetrack/drone'
+require 'dronetrack/track'
+require 'dronetrack/oauthhelper'

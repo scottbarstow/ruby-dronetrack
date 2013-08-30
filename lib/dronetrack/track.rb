@@ -5,7 +5,7 @@ module Dronetrack
     end
 
     def getPoints (id, callback)
-        makeRequest "#{@path}/#{id}/points"
+        makeRequest "#{@path}/#{id}/points", :get
     end    
 
     def addPoints (id, points=[])
