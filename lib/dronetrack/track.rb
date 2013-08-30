@@ -14,7 +14,7 @@ module Dronetrack
 
     def importPointsFromFiles (id, files, format=:csv)
         f = format.to_s().upcase()
-        raise "Format #{f} is not supported" if f != "CSV" && f != "KML"
+        raise ArgumentError, "Format #{f} is not supported" if f != "CSV" && f != "KML"
         body = {}
         i = 1
         mime = "application/vnd.google-earth.kml+xml"

@@ -50,7 +50,7 @@ module Dronetrack
         end
         r = res.parsed
         unless r.error.nil?
-          raise r.error
+          raise StandardError, r.error
         end  
         r  
     end   
