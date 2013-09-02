@@ -4,7 +4,7 @@ module Dronetrack
         super(baseUrl, "/drone", accessToken)
     end
 
-    def addPoints (id, trackId, points=[])
+    def add_points (id, trackId, points=[])
         if trackId.is_a? Array or trackId.is_a? Hash
           points = trackId
           trackId = nil
@@ -12,7 +12,7 @@ module Dronetrack
         makeRequest "#{@path}/#{id}/points", :post, {:body => {:trackId => trackId, :points => points}.to_json, :headers=>{'Content-Type' => 'application/json'}}
     end    
 
-    def importPointsFromFiles (id, files, format=:csv)
+    def import_points_from_files (id, files, format=:csv)
         f = format.to_s().upcase()
         raise ArgumentError, "Format #{f} is not supported" if f != "CSV" && f != "KML"
         body = {}

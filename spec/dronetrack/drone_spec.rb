@@ -1,6 +1,6 @@
 require 'helper'
 
-def createDrone
+def create_drone
   before (:all) do
     @droneId = @drone.create({:name => 'new Drone'})['id']
   end
@@ -83,47 +83,47 @@ describe Dronetrack::Drone do
     end
   end
 
-  describe '#addPoints' do
-    createDrone()
+  describe '#add_points' do
+    create_drone()
     it 'should create new track and add points to it if trackId is missing' do
       data = [{latitude: 1, longitude: 1}, {latitude: 2, longitude: 2}]
-      res = @drone.addPoints @droneId, data
+      res = @drone.add_points @droneId, data
       expect(res.has_key?('trackId')).to be_true
     end
 
     it 'should add points to existing track' do
       data = [{latitude: 1, longitude: 1}, {latitude: 2, longitude: 2}]
-      res = @drone.addPoints @droneId, data
+      res = @drone.add_points @droneId, data
       expect(res.has_key?('trackId')).to be_true
       trackId = res['trackId']
       data = [{latitude: 3, longitude: 3}, {latitude: 4, longitude: 4}]
-      res = @drone.addPoints @droneId, trackId, data
+      res = @drone.add_points @droneId, trackId, data
       expect(res['trackId']).to eq(trackId)
     end
 
     it 'should fail for non-existing drone' do
       data =  [{latitude: 1, longitude: 1}, {latitude: 2, longitude: 2}]
-      expect(lambda {@drone.addPoints 'id', data}).to raise_error
+      expect(lambda {@drone.add_points 'id', data}).to raise_error
     end
 
     it 'should fail for non-existing track' do
       data =  [{latitude: 1, longitude: 1}, {latitude: 2, longitude: 2}]
-      expect(lambda {@drone.addPoints @droneId, 'trackId',  data}).to raise_error
+      expect(lambda {@drone.add_points @droneId, 'trackId',  data}).to raise_error
     end
 
   end
 
-  describe '#importPointsFromFiles' do
-    createDrone()
+  describe '#import_points_from_files' do
+    create_drone()
 
     it 'should create new tracks and add points for each csv file' do
       files = [File.expand_path('../test1.csv', __FILE__), File.expand_path('../test2.csv', __FILE__)]
-      @drone.importPointsFromFiles @droneId, files, :csv
+      @drone.import_points_from_files @droneId, files, :csv
     end
 
     it 'should create new tracks and add points for each kml file' do
       files = [File.expand_path('../test1.kml', __FILE__)]
-      @drone.importPointsFromFiles @droneId, files, :kml
+      @drone.import_points_from_files @droneId, files, :kml
     end
 
   end

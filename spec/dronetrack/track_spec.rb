@@ -94,38 +94,38 @@ describe Dronetrack::Track do
     end
   end
 
-  describe '#addPoints' do
+  describe '#add_points' do
     create_track()
     it 'should add points' do
       data = [{latitude: 1, longitude: 1}, {latitude: 2, longitude: 2}]
-      res = @track.addPoints @trackId, data
+      res = @track.add_points @trackId, data
       expect(res.has_key?('trackId')).to be_true
     end
 
     it 'should fail for non-existing track' do
       data =  [{latitude: 1, longitude: 1}, {latitude: 2, longitude: 2}]
-      expect(lambda {@track.addPoints 'id', data}).to raise_error
+      expect(lambda {@track.add_points 'id', data}).to raise_error
     end
   end
 
-  describe '#importPointsFromFiles' do
+  describe '#import_points_from_files' do
     create_track()
     it 'should create new tracks and add points for each csv file' do
       files = [File.expand_path('../test1.csv', __FILE__), File.expand_path('../test2.csv', __FILE__)]
-      @track.importPointsFromFiles @trackId, files, :csv
+      @track.import_points_from_files @trackId, files, :csv
     end
 
     it 'should create new tracks and add points for each kml file' do
       files = [File.expand_path('../test1.kml', __FILE__)]
-      @track.importPointsFromFiles @trackId, files, :kml
+      @track.import_points_from_files @trackId, files, :kml
     end
   end
 
-  describe '#getPoints' do
+  describe '#get_points' do
     it 'should return points of the track' do
       data = [{latitude: 1, longitude: 1}, {latitude: 2, longitude: 2}]
-      @track.addPoints @trackId, data
-      pts = @track.getPoints @trackId
+      @track.add_points @trackId, data
+      pts = @track.get_points @trackId
       expect(pts.kind_of?(Array)).to be_true
       expect(pts.length).to be >= 2
     end
