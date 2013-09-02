@@ -4,7 +4,7 @@ module Dronetrack
         super(baseUrl, "/track", accessToken)
     end
 
-    def getPoints (id, callback)
+    def getPoints (id)
         makeRequest "#{@path}/#{id}/points", :get
     end    
 
