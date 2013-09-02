@@ -19,11 +19,16 @@ module Dronetrack
         i = 1
         mime = "application/vnd.google-earth.kml+xml"
         mime = "text/csv" if format == :csv
-        for file in files
-            body["file#{i}"] = UploadIO.new(file, mime)
-            i = i + 1
-        end    
-        makeRequest "#{@path}/#{id}/points/import#{f}", :post, {:body => body}
-    end    
+        files.each do |file|
+          body["file#{i}".to_sym] = Faraday::UploadIO.new(file, mime)
+          i = i + 1
+        end
+        r = createNewRequest do |con|
+          con.request :multipart
+          con.request :url_encoded
+          con.adapter :net_http
+        end
+        r.post "#{@path}/#{id}/points/import#{f}", {:body => body, :headers => {"Accept" => "application/json"}}
+    end
   end
 end

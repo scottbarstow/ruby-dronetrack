@@ -7,10 +7,9 @@ module Dronetrack
       if baseUrl.length > 0 and baseUrl[baseUrl.length - 1] == "/"
             baseUrl = baseUrl[0, baseUrl.length - 1]
       end 
-      @client = OAuth2::Client.new("", "", :site => baseUrl)# do |conn|
-      #  conn.request :multipart
-      #  conn.request :url_encoded
-      #end
+      @baseUrl = baseUrl
+      @accessToken = accessToken
+      @client = OAuth2::Client.new("", "", :site => baseUrl)
       @token = OAuth2::AccessToken.from_hash(@client, :access_token => accessToken)
     end
 
@@ -39,21 +38,25 @@ module Dronetrack
 
     protected
 
-    def makeRequest (url, method, opts = {})
+    def makeRequest (url, method, opts = {}, &block)
         if opts[:headers].nil?
           opts[:headers] = {}
         end  
         opts[:headers]["Accept"] = "application/json"
-        #if method == :post or method == :put
-        #  opts[:headers]["Content-Type"] = "application/json"
-        #end
-        res = @token.request(method, url, opts)
+        res = @token.request(method, url, opts, &block)
         r = res.parsed
         if r.kind_of?(Hash) and r.has_key?(:error)
           raise StandardError, r[:error]
         end  
         r  
-    end   
+    end
+
+    def createNewRequest (&block)
+      client = OAuth2::Client.new("", "", :site => @baseUrl) do |conn|
+          yield(conn) if block_given?
+      end
+      OAuth2::AccessToken.from_hash(client, :access_token => @accessToken)
+    end
 
 
   end

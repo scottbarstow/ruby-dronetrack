@@ -112,4 +112,19 @@ describe Dronetrack::Drone do
     end
 
   end
+
+  describe '#importPointsFromFiles' do
+    createDrone()
+
+    it 'should create new tracks and add points for each csv file' do
+      files = [File.expand_path('../test1.csv', __FILE__), File.expand_path('../test2.csv', __FILE__)]
+      @drone.importPointsFromFiles @droneId, files, :csv
+    end
+
+    it 'should create new tracks and add points for each kml file' do
+      files = [File.expand_path('../test1.kml', __FILE__)]
+      @drone.importPointsFromFiles @droneId, files, :kml
+    end
+
+  end
 end
