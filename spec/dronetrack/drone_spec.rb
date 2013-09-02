@@ -13,7 +13,7 @@ end
 describe Dronetrack::Drone do
   
   before(:all) do
-    @drone = Drone.new('http://localhost:3000', '111111')
+    @drone = Drone.new($config['baseUrl'], '111111')
   end  
   
   describe '#all' do

@@ -1,8 +1,8 @@
 require 'helper'
 
 def create_simple_track
-  drone = Drone.new('http://localhost:3000', '111111')
-  track = Track.new('http://localhost:3000', '111111')
+  drone = Drone.new($config['baseUrl'], '111111')
+  track = Track.new($config['baseUrl'], '111111')
   d = drone.create :name => 'new Drone'
   item = {:name => 'new Track', :deviceId => d['id']}
   track.create item
@@ -16,7 +16,7 @@ def create_track
   end
 
   after (:all) do
-    drone = Drone.new('http://localhost:3000', '111111')
+    drone = Drone.new($config['baseUrl'], '111111')
     drone.remove @droneId
   end
 end
@@ -24,7 +24,7 @@ end
 describe Dronetrack::Track do
   
   before(:all) do
-    @track = Track.new('http://localhost:3000', '111111')
+    @track = Track.new($config['baseUrl'], '111111')
   end  
   
   describe '#all' do

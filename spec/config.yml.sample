@@ -1,0 +1,9 @@
+baseUrl: http://localhost:3000
+
+# redirect url must be http://localhost for this clientId
+clientId:
+clientSecret:
+
+# used to authorize user  before get access token
+userName:
+password:
