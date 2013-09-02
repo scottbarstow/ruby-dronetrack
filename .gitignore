@@ -33,3 +33,4 @@ coverage.data
 
 ## Rubinius
 *.rbc
+.idea
