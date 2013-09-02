@@ -98,8 +98,7 @@ describe Dronetrack::Track do
     create_track()
     it 'should add points' do
       data = [{latitude: 1, longitude: 1}, {latitude: 2, longitude: 2}]
-      res = @track.add_points @trackId, data
-      expect(res.has_key?('trackId')).to be_true
+      @track.add_points @trackId, data
     end
 
     it 'should fail for non-existing track' do
@@ -122,6 +121,7 @@ describe Dronetrack::Track do
   end
 
   describe '#get_points' do
+    create_track()
     it 'should return points of the track' do
       data = [{latitude: 1, longitude: 1}, {latitude: 2, longitude: 2}]
       @track.add_points @trackId, data
