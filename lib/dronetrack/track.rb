@@ -9,7 +9,7 @@ module Dronetrack
     end    
 
     def addPoints (id, points=[])
-        makeRequest "#{@path}/#{id}/points", :post, :body => points
+        makeRequest "#{@path}/#{id}/points", :post, {:body => points.to_json, :headers=>{'Content-Type' => 'application/json'}}
     end    
 
     def importPointsFromFiles (id, files, format=:csv)

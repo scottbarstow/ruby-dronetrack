@@ -1,4 +1,5 @@
 require 'oauth2'
+require 'json'
 module Dronetrack
   class RestService
     def initialize (baseUrl, path, accessToken)
@@ -27,10 +28,10 @@ module Dronetrack
     end
 
     def update (item)
-        makeRequest "#{@path}/#{item.id}", :put, {:body => item}
+        makeRequest "#{@path}/#{item['id']}", :put, {:body => item}
     end
 
-    def remove (id, callback) 
+    def remove (id)
         makeRequest "#{@path}/#{id}", :delete
     end
     
@@ -43,9 +44,9 @@ module Dronetrack
           opts[:headers] = {}
         end  
         opts[:headers]["Accept"] = "application/json"
-        if method == :post or method == :put
-          opts[:headers]["Content-Type"] = "application/json"
-        end  
+        #if method == :post or method == :put
+        #  opts[:headers]["Content-Type"] = "application/json"
+        #end
         res = @token.request(method, url, opts)
         r = res.parsed
         if r.kind_of?(Hash) and r.has_key?(:error)
