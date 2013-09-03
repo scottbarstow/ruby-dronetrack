@@ -25,9 +25,6 @@ bundle
 
 ```
 
----
-
----
 
 # Using Dronetrack Client
 
