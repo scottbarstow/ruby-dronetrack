@@ -13,6 +13,7 @@ Gem::Specification.new do |spec|
   spec.files        += Dir.glob("spec/**/*")
   spec.homepage      = 'https://github.com/scottbarstow/ruby-dronetrack'
   spec.name          = 'dronetrack'
+  spec.license       = 'MIT'
   spec.require_paths = ['lib']
   spec.required_rubygems_version = '>= 1.3.5'
   spec.summary       = %q{A Ruby wrapper for  Dronetrack  API.}
